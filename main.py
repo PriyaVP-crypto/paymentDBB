@@ -59,7 +59,8 @@ class payRequ(tornado.web.RequestHandler):
         base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/pymntAuth?acctId='
         # 100000001001   is the only working answer
         headers = {'Content-Type': 'application/json'}
-        end_url= base_url+str(self.get_body_argument("debit_amt"))+"&acctno="+str(self.get_body_argument("accnt"))
+        end_url= base_url+str(self.get_body_argument("accnt"))+"&debitAmt="+str(self.get_body_argument("debit_amt"))
+        #end_url= base_url+str(self.get_body_argument("debit_amt"))+"&acctno="+str(self.get_body_argument("accnt"))
         req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
         json_out = req.json()
         print("json")
