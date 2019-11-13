@@ -74,7 +74,7 @@ class basicRevHandler(tornado.web.RequestHandler):
 class revRequ(tornado.web.RequestHandler):
     def post(self):
         # base_url = 'https://192.86.33.94:19443/cusdereg/AccountNo?acctno='
-        base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/pymntRev?acctId=''
+        base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/pymntRev?acctId='
         # 100000001001 is the only working answer
         headers = {'Content-Type': 'application/json'}
         end_url= base_url+str(self.get_body_argument("accnt"))+"&transId="+str(self.get_body_argument("trans"))+"&revAmt="+str(self.get_body_argument("debit_amt"))
