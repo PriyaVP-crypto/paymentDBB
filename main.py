@@ -80,7 +80,7 @@ class revRequ(tornado.web.RequestHandler):
         end_url= base_url+str(self.get_body_argument("accnt"))+"&transId="+str(self.get_body_argument("trans"))+"&revAmt="+str(self.get_body_argument("debit_amt"))
         #end_url= base_url+str(self.get_body_argument("accnt"))+"&tranid="+str(self.get_body_argument("trans"))+"&revamt="+str(self.get_body_argument("debit_amt"))
         req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
-        print(req.txt)
+        print(req.text)
         json_out = req.json()
         print("json")
         print(json_out)
