@@ -77,21 +77,30 @@ class revRequ(tornado.web.RequestHandler):
         base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/pymntRev?acctId='
         # 100000001001 is the only working answer
         headers = {'Content-Type': 'application/json'}
-        print("header")
         end_url= base_url+str(self.get_body_argument("accnt"))+"&transId="+str(self.get_body_argument("trans"))+"&revAmt="+str(self.get_body_argument("debit_amt"))
-        #end_url= base_url+str(self.get_body_argument("accnt"))+"&tranid="+str(self.get_body_argument("trans"))+"&revamt="+str(self.get_body_argument("debit_amt"))
-        print("going for get")
         req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
-        print("get over")
-        if req.status_code != 200:
-            print("failed")
-        else:
-            print("ok")
         json_out = req.json()
-        print("json")
-        print(json_out)
         self.render("static/genericresp.html",msg=json_out['CSREVRES']['CSREVRES']['MESSAGES'],cname=json_out['CSREVRES']['CSREVRES']['CUSTOMER_NAME'],hbal=json_out['CSREVRES']['CSREVRES']['HOLD_BALANCE'],lbal=json_out['CSREVRES']['CSREVRES']['LEDGER_BL'],bal=json_out['CSREVRES']['CSREVRES']['AVAILABLE_BALANCE'],cid=json_out['CSREVRES']['CSREVRES']['CUSTOMER_ID'],credamt=json_out['CSREVRES']['CSREVRES']['CREDIT_AMOUNT_RES'],tid=json_out['CSREVRES']['CSREVRES']['TRANSACTIONS_ID'],date=json_out['CSREVRES']['CSREVRES']['SYS_DATE'],time=json_out['CSREVRES']['CSREVRES']['SYS_TIME'],bloc="payrev")
 
+
+if __name__ == "__main__":
+    app = tornado.web.Application([
+        (r"/", landingPage),
+        (r"/register", basicRequestHandler),
+        (r"/regrequ", regRequ),
+        (r"/deregister", basicDeRequestHandler),
+        (r"/deregrequ", deRegRequ),
+        (r"/paymentauth", basicPayHandler),
+        (r"/payrequ", payRequ),
+        (r"/paymentrevauth", basicRevHandler),
+        (r"/revRequ", revRequ),
+    ])
+
+    app.listen(port)
+    # TODO remove in prod
+    tornado.autoreload.start()
+    print("I'm listening on port specified")
+    tornado.ioloop.IOLoop.current().start()
 
 if __name__ == "__main__":
     app = tornado.web.Application([
