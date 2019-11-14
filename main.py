@@ -83,6 +83,10 @@ class revRequ(tornado.web.RequestHandler):
         print("going for get")
         req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
         print("get over")
+        if req.status_code != 200:
+            print("failed")
+        else:
+            print("ok")
         json_out = req.json()
         print("json")
         print(json_out)
