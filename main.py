@@ -113,6 +113,7 @@ if __name__ == "__main__":
         (r"/paymentrevauth", basicRevHandler),
         (r"/revRequ", revRequ),
         (r"/batchapi", basicBatchHandler),
+        (r"/batchrequ", batchRequ),
     ])
 
     app.listen(port)
