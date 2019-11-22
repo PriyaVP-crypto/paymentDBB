@@ -97,7 +97,7 @@ class batchrequ(tornado.web.RequestHandler):
         json_out = req.json()
         print("json")
         print(json_out)
-        self.render("static/batchresp.html",msg=json_out['HMSBATCHOperationResponse']['svc_resp_variables'])
+        self.render("static/genericresp.html",msg=json_out['HMSBATCHOperationResponse']['svc_resp_variables'],bloc="batch")
 
         
         
