@@ -82,7 +82,25 @@ class revRequ(tornado.web.RequestHandler):
         json_out = req.json()
         self.render("static/genericresp.html",msg=json_out['CSREVRES']['CSREVRES']['MESSAGES'],cname=json_out['CSREVRES']['CSREVRES']['CUSTOMER_NAME'],hbal=json_out['CSREVRES']['CSREVRES']['HOLD_BALANCE'],lbal=json_out['CSREVRES']['CSREVRES']['LEDGER_BL'],bal=json_out['CSREVRES']['CSREVRES']['AVAILABLE_BALANCE'],cid=json_out['CSREVRES']['CSREVRES']['CUSTOMER_ID'],credamt=json_out['CSREVRES']['CSREVRES']['CREDIT_AMOUNT_RES'],tid=json_out['CSREVRES']['CSREVRES']['TRANSACTIONS_ID'],date=json_out['CSREVRES']['CSREVRES']['SYS_DATE'],time=json_out['CSREVRES']['CSREVRES']['SYS_TIME'],bloc="payrev")
 
+class basicBatchHandler(tornado.web.RequestHandler):
+    def get(self):
+        print("I'm listening on port specified")
+        self.render("static/batchapi.html")
 
+class batchrequ(tornado.web.RequestHandler):
+    def post(self):
+        base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/custReg?acctId='
+        # 100000001001 is the only working answer
+        headers = {'Content-Type': 'application/json'}
+        end_url= base_url+str(self.get_body_argument("accnt"))
+        req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
+        json_out = req.json()
+        print("json")
+        print(json_out)
+        self.render("static/genericresp.html",msg=json_out['CSRGRES']['CSRGRES']['MESSAGES'],cname=json_out['CSRGRES']['CSRGRES']['CUSTOMER_NAME'],cid=json_out['CSRGRES']['CSRGRES']['CUSTOMER_ID'],date=json_out['CSRGRES']['CSRGRES']['SYS_DATE'],time=json_out['CSRGRES']['CSRGRES']['SYS_TIME'],bloc="regreq")
+
+        
+        
 if __name__ == "__main__":
     app = tornado.web.Application([
         (r"/", landingPage),
@@ -94,6 +112,7 @@ if __name__ == "__main__":
         (r"/payrequ", payRequ),
         (r"/paymentrevauth", basicRevHandler),
         (r"/revRequ", revRequ),
+        (r"/batchapi", basicBatchHandler),
     ])
 
     app.listen(port)
