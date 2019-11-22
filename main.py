@@ -89,15 +89,15 @@ class basicBatchHandler(tornado.web.RequestHandler):
 
 class batchrequ(tornado.web.RequestHandler):
     def post(self):
-        base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/custReg?acctId='
+        base_url = 'https://192.86.33.94:19443/batchpgm/cbs?AcctNo='
         # 100000001001 is the only working answer
         headers = {'Content-Type': 'application/json'}
         end_url= base_url+str(self.get_body_argument("accnt"))
-        req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
+        req = requests.get(end_url, headers=headers, auth=('ibmuser', 'ibmuser'), verify=False)
         json_out = req.json()
         print("json")
         print(json_out)
-        self.render("static/genericresp.html",msg=json_out['CSRGRES']['CSRGRES']['MESSAGES'],cname=json_out['CSRGRES']['CSRGRES']['CUSTOMER_NAME'],cid=json_out['CSRGRES']['CSRGRES']['CUSTOMER_ID'],date=json_out['CSRGRES']['CSRGRES']['SYS_DATE'],time=json_out['CSRGRES']['CSRGRES']['SYS_TIME'],bloc="regreq")
+        self.render("static/genericresp.html",msg=json_out['HMSBATCHOperationResponse']['svc_resp_variables']")
 
         
         
