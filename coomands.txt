@@ -38,5 +38,6 @@ git clone https://gitlab.com/andrewmoses/ibm_coe_payment
 cd [local directory]
 ibmcloud login    {username m1.ganesh@tcs.com    pws:Periya4th2eni}
 ibmcloud target --cf
+
 ibmcloud cf push
 
