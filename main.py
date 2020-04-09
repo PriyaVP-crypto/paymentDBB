@@ -102,7 +102,7 @@ class dvmreq(tornado.web.RequestHandler):
         json_out = req.json()
         print("json")
         print(json_out)
-        self.render("static/genericresp.html",msg=json_out['HMSBATCHOperationResponse']['svc_resp_variables'],bloc="batch")
+        self.render("static/dvmresp.html",type0=json_out['Records']['0']['account_type'],name0=json_out['Records']['0']['account_name'],stat0=json_out['Records']['0']['account_status'],id0=json_out['Records']['0']['customer_id'],acct0=json_out['Records']['0']['account_no'],branch0=json_out['Records']['0']['branch'],type1=json_out['Records']['1']['account_type'],name1=json_out['Records']['1']['account_name'],stat1=json_out['Records']['1']['account_status'],id1=json_out['Records']['1']['customer_id'],acct1=json_out['Records']['1']['account_no'],branch1=json_out['Records']['1']['branch'],bloc="dvm")
 
 
 
