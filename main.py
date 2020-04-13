@@ -120,6 +120,7 @@ if __name__ == "__main__":
         (r"/revRequ", revRequ),
         (r"/batchapi", basicBatchHandler),
         (r"/batchrequ", batchrequ),
+        (r"/dvmresp", dvmreq),
     ])
 
     app.listen(port)
