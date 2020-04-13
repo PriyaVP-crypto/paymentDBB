@@ -97,7 +97,7 @@ class basicDVMHandler(tornado.web.RequestHandler):
         print("I'm listening on port specified")
         self.render("static/dvmapi.html")
 
-class dvmreq(tornado.web.RequestHandler):
+class dvmRequ(tornado.web.RequestHandler):
     def post(self):
         base_url = 'https://192.86.33.94:19443/dvmget/dvmget'
         # 100000001001 is the only working answer
@@ -126,7 +126,7 @@ if __name__ == "__main__":
         (r"/batchapi", basicBatchHandler),
         (r"/batchrequ", batchrequ),
         (r"/dvmapi", basicDVMHandler),
-        (r"/dvmresp", dvmreq),
+        (r"/dvmreq", dvmRequ),
     ])
 
     app.listen(port)
