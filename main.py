@@ -91,6 +91,11 @@ class batchrequ(tornado.web.RequestHandler):
         print(json_out)
         self.render("static/genericresp.html",msg=json_out['HMSBATCHOperationResponse']['svc_resp_variables'],bloc="batch")
 
+        
+class basicDVMHandler(tornado.web.RequestHandler):
+    def get(self):
+        print("I'm listening on port specified")
+        self.render("static/dvmapi.html")
 
 class dvmreq(tornado.web.RequestHandler):
     def post(self):
@@ -120,6 +125,7 @@ if __name__ == "__main__":
         (r"/revRequ", revRequ),
         (r"/batchapi", basicBatchHandler),
         (r"/batchrequ", batchrequ),
+        (r"/dvmapi", basicDVMHandler),
         (r"/dvmresp", dvmreq),
     ])
 
