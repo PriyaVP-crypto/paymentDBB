@@ -27,7 +27,7 @@ class Login(tornado.web.RequestHandler):
         #req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
         #json_out = req.json()
         print("json")
-        if uname =="admin" and pwd == "adminpass":
+        if username =="admin" and pwd == "adminpass":
             print("success")
             self.render("static/indexx.html")
         else:
