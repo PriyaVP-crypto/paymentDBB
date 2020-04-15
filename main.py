@@ -18,15 +18,20 @@ class Login(tornado.web.RequestHandler):
         #base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/custReg?acctId='
         # 100000001001 is the only working answer
         #headers = {'Content-Type': 'application/json'}
-        uname = self.get_body_argument("uname")
-        pwd = self.get_body_argument("pass")
+        print("inside login")
+        username = str(self.get_body_argument("uname"))
+        print(username)
+        pwd = str(self.get_body_argument("pass"))
+        print(pwd)
         #end_url= base_url+str(self.get_body_argument("accnt"))
         #req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
         #json_out = req.json()
         print("json")
         if uname =="admin" and pwd == "adminpass":
+            print("success")
             self.render("static/indexx.html")
         else:
+            print("no")
             self.render("static/trial.html")
         #print(json_out)
         #self.render("static/genericresp.html",msg=json_out['CSRGRES']['CSRGRES']['MESSAGES'],cname=json_out['CSRGRES']['CSRGRES']['CUSTOMER_NAME'],cid=json_out['CSRGRES']['CSRGRES']['CUSTOMER_ID'],date=json_out['CSRGRES']['CSRGRES']['SYS_DATE'],time=json_out['CSRGRES']['CSRGRES']['SYS_TIME'],bloc="regreq")
