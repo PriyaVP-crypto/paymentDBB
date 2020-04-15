@@ -32,7 +32,9 @@ $(document).ready(function(){
 				<p>Login to enjoy our services.</p>
                 <form action="/login" method="POST">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" value="uname" id="uname">
+                        <input type="text" class="form-control"  name="uname" id="uname" class="validate">
+			
+			<label for="uname"> User Name</label>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" placeholder="password" value="pass" id="pass">
