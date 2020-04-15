@@ -7,17 +7,38 @@ import tornado.autoreload
 
 # On IBM Cloud Cloud Foundry, get the port number from the environment variable PORT
 # When running this app on the local machine, default the port to 8000
-#check for new image
-
 port = int(os.getenv('PORT', 8080))
 
 class landingPage(tornado.web.RequestHandler):
     def get(self):
-        self.render("static/indexx.html")
+        self.render("static/trial.html")
+
+class Login(tornado.web.RequestHandler):
+    def post(self):
+        #base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/custReg?acctId='
+        # 100000001001 is the only working answer
+        #headers = {'Content-Type': 'application/json'}
+        uname = self.get_body_argument("uname")
+        pwd = self.get_body_argument("pass")
+        #end_url= base_url+str(self.get_body_argument("accnt"))
+        #req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
+        #json_out = req.json()
+        print("json")
+        if uname =="admin" and pwd == "adminpass":
+            self.render("static/indexx.html")
+        else:
+            self.render("static/trial.html")
+        #print(json_out)
+        #self.render("static/genericresp.html",msg=json_out['CSRGRES']['CSRGRES']['MESSAGES'],cname=json_out['CSRGRES']['CSRGRES']['CUSTOMER_NAME'],cid=json_out['CSRGRES']['CSRGRES']['CUSTOMER_ID'],date=json_out['CSRGRES']['CSRGRES']['SYS_DATE'],time=json_out['CSRGRES']['CSRGRES']['SYS_TIME'],bloc="regreq")
+
+
+
 
 class basicRequestHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("static/register.html")
+
+
 
 class regRequ(tornado.web.RequestHandler):
     def post(self):
@@ -75,7 +96,7 @@ class revRequ(tornado.web.RequestHandler):
         req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
         json_out = req.json()
         self.render("static/genericresp.html",msg=json_out['CSREVRES']['CSREVRES']['MESSAGES'],cname=json_out['CSREVRES']['CSREVRES']['CUSTOMER_NAME'],hbal=json_out['CSREVRES']['CSREVRES']['HOLD_BALANCE'],lbal=json_out['CSREVRES']['CSREVRES']['LEDGER_BL'],bal=json_out['CSREVRES']['CSREVRES']['AVAILABLE_BALANCE'],cid=json_out['CSREVRES']['CSREVRES']['CUSTOMER_ID'],credamt=json_out['CSREVRES']['CSREVRES']['CREDIT_AMOUNT_RES'],tid=json_out['CSREVRES']['CSREVRES']['TRANSACTIONS_ID'],date=json_out['CSREVRES']['CSREVRES']['SYS_DATE'],time=json_out['CSREVRES']['CSREVRES']['SYS_TIME'],bloc="payrev")
-        
+
 class basicBatchHandler(tornado.web.RequestHandler):
     def get(self):
         print("I'm listening on port specified")
@@ -93,7 +114,7 @@ class batchrequ(tornado.web.RequestHandler):
         print(json_out)
         self.render("static/genericresp.html",msg=json_out['HMSBATCHOperationResponse']['svc_resp_variables'],bloc="batch")
 
-        
+
 class basicDVMHandler(tornado.web.RequestHandler):
     def get(self):
         print("I'm listening on port specified")
@@ -129,6 +150,7 @@ if __name__ == "__main__":
         (r"/batchrequ", batchrequ),
         (r"/dvmapi", basicDVMHandler),
         (r"/dvmreq", dvmRequ),
+        (r"/login", Login),
     ])
 
     app.listen(port)
