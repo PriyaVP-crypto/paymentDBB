@@ -12,6 +12,10 @@ port = int(os.getenv('PORT', 8080))
 class landingPage(tornado.web.RequestHandler):
     def get(self):
         self.render("static/trial.html")
+        
+class HomePage(tornado.web.RequestHandler):
+    def get(self):
+        self.render("static/indexx.html")
 
 class Login(tornado.web.RequestHandler):
     def post(self):
@@ -157,6 +161,7 @@ if __name__ == "__main__":
         (r"/dvmapi", basicDVMHandler),
         (r"/dvmreq", dvmRequ),
         (r"/login", Login),
+        (r"/homepage", HomePage),
     ])
 
     app.listen(port)
