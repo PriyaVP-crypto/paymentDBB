@@ -47,11 +47,12 @@ class basicRequestHandler(tornado.web.RequestHandler):
 
 class regRequ(tornado.web.RequestHandler):
     def post(self):
-        base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/custReg?acctId='
+        base_url = 'https://192.86.33.94:19443/cbsrgdbbapi/cusreg?AcctNo='
         # 100000001001 is the only working answer
         headers = {'Content-Type': 'application/json'}
         end_url= base_url+str(self.get_body_argument("accnt"))
-        req = requests.get(end_url, headers=headers, auth=('701e3938-c7c7-4568-9e3b-d474bfb39700', ''), verify=False)
+        print("before")
+        req = requests.get(end_url, headers=headers, auth=('ibmuser', 'ibmuser'), verify=False)
         json_out = req.json()
         print("json")
         print(json_out)
