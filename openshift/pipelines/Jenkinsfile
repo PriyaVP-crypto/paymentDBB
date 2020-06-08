@@ -1,0 +1,83 @@
+pipeline {
+    agent {
+        node {label 'python'}
+    }
+    environment {
+        APPLICATION_NAME = 'python-payment'
+        GIT_REPO="https://github.com/PriyaVP-crypto/payment.git"
+        GIT_BRANCH="master"
+        STAGE_TAG = "promoteToQA"
+        DEV_PROJECT = "dev"
+        STAGE_PROJECT = "stage"
+        TEMPLATE_NAME = "python-payment"
+        ARTIFACT_FOLDER = "target"
+        REGISTRY = "priyavp/python-payment"
+        REGCREDENTIAL = 'dockerhub'
+        DOCKERIMAGE= ''
+        PORT = 8081;
+    }
+    stages {
+        stage('Get Latest Code') {
+            steps {
+                git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
+            }
+        }
+        stage ("Install Dependencies") {
+            steps {
+                sh """
+                pip install virtualenv
+                virtualenv foo
+                source foo/Scripts/activate
+                pip install -r requirements.txt
+                deactivate
+                """
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                sh '''
+                echo "Tests success"
+                '''
+                
+            }
+        }
+        
+        stage('Store Artifact'){
+            steps{
+                script{
+                    def safeBuildName  = "${APPLICATION_NAME}_${BUILD_NUMBER}",
+                        artifactFolder = "${ARTIFACT_FOLDER}",
+                        fullFileName   = "${safeBuildName}.tar.gz",
+                        applicationZip = "${artifactFolder}/${fullFileName}"
+                        applicationDir = ["static",
+                                            "main.py",
+                                            "manifest.yml",
+                                            "Dockerfile",
+                                            ].join(" ");
+                    def needTargetPath = !fileExists("${artifactFolder}")
+                    if (needTargetPath) {
+                        sh "mkdir ${artifactFolder}"
+                    }
+                    sh "tar -czvf ${applicationZip} ${applicationDir}"
+                    archiveArtifacts artifacts: "${applicationZip}", excludes: null, onlyIfSuccessful: true
+                }
+            }
+        }
+        stage('Building Image Trial') {
+            steps {
+                script {
+                   DOCKERIMAGE = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy Image') {
+            steps {
+                script {
+                    docker.withRegistry( '', REGCREDENTIAL ) {
+                        DOCKERIMAGE.push()
+                    }
+                }
+            }
+        }
+    }  
+    }
