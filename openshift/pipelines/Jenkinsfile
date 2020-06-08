@@ -50,8 +50,13 @@ pipeline {
                         fullFileName   = "${safeBuildName}.tar.gz",
                         applicationZip = "${artifactFolder}/${fullFileName}"
                         applicationDir = ["static",
+                                          "kubernetes",
+                                          "LICENSE",
+                                          "Procfile",
+                                          "runtime.txt",
                                             "main.py",
                                             "manifest.yml",
+                                          "requirements.txt",
                                             "Dockerfile",
                                             ].join(" ");
                     def needTargetPath = !fileExists("${artifactFolder}")
