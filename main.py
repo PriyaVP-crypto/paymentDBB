@@ -4,6 +4,8 @@ import requests
 import tornado.web
 import tornado.ioloop
 import tornado.autoreload
+import sys
+import asyncio
 
 # On IBM Cloud Cloud Foundry, get the port number from the environment variable PORT
 # When running this app on the local machine, default the port to 8000
@@ -163,7 +165,10 @@ if __name__ == "__main__":
         (r"/login", Login),
         (r"/homepage", HomePage),
     ])
-
+    print("problem")
+    if sys.platform == 'win32':
+    	asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    #server=HTTPServer(app)
     app.listen(port)
     # TODO remove in prod
     tornado.autoreload.start()
