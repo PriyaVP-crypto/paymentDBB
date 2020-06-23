@@ -14,7 +14,7 @@ pipeline {
         REGISTRY = "priyavp/python-payment"
         REGCREDENTIAL = 'dockerhub'
         DOCKERIMAGE= ''
-        PORT = 8081;
+        PORT = 8080;
     }
     stages {
         stage('Get Latest Code') {
