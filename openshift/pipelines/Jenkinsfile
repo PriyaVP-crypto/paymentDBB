@@ -68,6 +68,17 @@ pipeline {
                 }
             }
         }
+        stage ('buildInDevelopment') {
+            steps {
+
+                   openshiftBuild(namespace: 'paymentcp4a', buildConfig: 'pythonpipeline', showBuildLogs: 'true')
+            }
+        }
+
+        stage (deployInDevelopment) {
+
+            openshiftDeploy(namespace: 'paymentcp4a', deploymentConfig: 'pythonpipeline')
+        }
         stage('Building Image Trial') {
             steps {
                 script {
