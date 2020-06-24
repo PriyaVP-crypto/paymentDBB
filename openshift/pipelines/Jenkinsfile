@@ -76,10 +76,7 @@ pipeline {
             }
         }
 
-        stage('deployInDevelopment') {
-
-            openshiftDeploy(namespace: 'paymentcp4a', deploymentConfig: 'pythonpipeline')
-        }
+       
         stage('Building Image Trial') {
             steps {
                 script {
