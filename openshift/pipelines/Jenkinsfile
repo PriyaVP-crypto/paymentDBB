@@ -68,30 +68,21 @@ pipeline {
                 }
             }
         }
-        stage('buildInDevelopment') {
+        stage('Openshift Build') {
             steps {
                 script {
                    openshiftBuild(namespace: 'paymentcp4a', buildConfig: 'pythonpipeline', showBuildLogs: 'true')
                 }
             }
         }
+        stage('Openshift Deployment') {
+            steps {
+                script {
+                   openshiftDeploy(namespace: 'paymentcp4a', deploymentConfig: 'pythonpipeline')
+                }
+            }
+        }        
 
-       
-        stage('Building Image Trial') {
-            steps {
-                script {
-                   DOCKERIMAGE = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-        stage('Deploy Image') {
-            steps {
-                script {
-                    docker.withRegistry( '', REGCREDENTIAL ) {
-                        DOCKERIMAGE.push()
-                    }
-                }
-            }
-        }
+ 
     }  
     }
