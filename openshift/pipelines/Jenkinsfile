@@ -71,14 +71,14 @@ pipeline {
         stage('Openshift Build') {
             steps {
                 script {
-                   openshiftBuild(namespace: 'CI/CD', buildConfig: 'fintech', showBuildLogs: 'true')
+                   openshiftBuild(namespace: 'cicd', buildConfig: 'fintech', showBuildLogs: 'true')
                 }
             }
         }
         stage('Openshift Deployment') {
             steps {
                 script {
-                   openshiftDeploy(namespace: 'CI/CD', deploymentConfig: 'fintech')
+                   openshiftDeploy(namespace: 'cicd', deploymentConfig: 'fintech')
                 }
             }
         }        
