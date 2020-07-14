@@ -53,8 +53,10 @@ class basicRequestHandler(tornado.web.RequestHandler):
 
 class regRequ(tornado.web.RequestHandler):
     def post(self):
-        base_url = 'https://192.86.33.94:19443/cbs/cusreg?AcctNo='
+        base_url = 'https://192.86.33.94:19443/cbsrgdbbapi/cusreg?AcctNo='
         # 100000001001 is the only working answer
+        #https://192.86.33.94:19443/cbs/cusreg?AcctNo=
+        #https://192.86.33.94:19443/cbsrgdbbapi/cusreg?AcctNo=
         headers = {'Content-Type': 'application/json'}
         end_url= base_url+str(self.get_body_argument("accnt"))
         print("before")
